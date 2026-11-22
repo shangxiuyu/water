@@ -1,13 +1,14 @@
 {
   "schema_version": 1,
   "name": "water",
-  "description": "Self-contained read-only context connectors for Tree (Personal Context OS)",
+  "kind": "skill",
+  "description": "Integrated Skill for Tree (Personal Context OS) to fetch & distill 1% slow-changing personal context from external apps",
   "connectors": [
     {
       "id": "jike",
       "name": "即刻 (Jike)",
       "status": "ready",
-      "file": "connectors/jike.py",
+      "file": "scripts/jike.py",
       "category": "community",
       "auth": "内置二维码扫码登录，凭证存本机 ~/.water/jike.json",
       "reads": ["个人收藏精选（正文、圈子、作者、链接）"],

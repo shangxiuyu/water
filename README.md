@@ -1,40 +1,31 @@
-# Water —— Tree 的外部上下文灌溉生态
+# Water Skill —— Tree 的外部上下文灌溉技能
 
 > **Seed（种子）破土，Water（活水）长流。**
-> **Water** 是 Tree（Personal Context OS）的社区扩展插件仓。每个已上架的连接器都**自带完整闭环（扫码登录 → 只读拉取 → 过滤流水 → 脱敏输出）**，零外部前置 Skill 依赖，宁缺毋滥。
+> **Water** 是一个整合型的 **Agent Skill**，专门配合 [Tree](https://github.com/shangxiuyu/Tree)（Personal Context OS）使用。它把外部 App（即刻、闲鱼、叮咚买菜、美团、Keep、飞猪等）的**扫码登录、只读拉取、流水过滤与脱敏提炼**打包成一个统一技能，让用户对 AI 说一句话就能完成外部上下文灌溉。
 
 ---
 
-## 核心原则
-
-1. **端到端自包含闭环**：新用户装完一个连接器就能直接用——没登录自动弹窗扫码，扫完自动保存凭证到本机 `~/.water/`，直接拉取精华喂给 Tree `seed`。
-2. **只吸 1% 养分，过滤 99% 流水**：订单金额、快递物流、时间线刷屏、健康明细、证件号**一律不碰**。
-3. **显式同意，不污染主干**：征得用户同意后安装到目标 Tree 仓库的 `.tree/seed/connectors/`（Git 自动忽略）。
-
----
-
-## 快速上手（30 秒闭环）
+## 一键安装
 
 ```bash
-# 1. 查看可用连接器与本机登录状态
-./bin/water list
-
-# 2. 一键安装到你的 Tree 仓库（若未登录会自动弹出二维码引导扫码）
-./bin/water install jike --tree /path/to/your/Tree
-
-# 3. 回到 Tree 拉取脱敏精华，交给宿主 Agent 蒸馏写入 01/02
-cd /path/to/your/Tree
-./bin/tree seed extract --sources jike
+./bin/water install-skill
 ```
+
+安装后，在任何支持的 Agent（Claude Code / Cursor / Antigravity / Eden 等）里直接说：
+* *“把我的即刻收藏接入 Tree”*
+* *“帮我看看 water 支持哪些外部平台”*
+
+Agent 会自动遵循 [SKILL.md](./SKILL.md) 跑完：**查状态 → 未登录时弹二维码让你扫 → 拉取并过滤 99% 流水 → 提炼 1% 慢变量写入 Tree**。
 
 ---
 
-## 当前支持状态
+## CLI 手动用法
 
-* **已就绪（Ready，完整闭环）**：
-  * `jike`（即刻）：内置二维码扫码登录 + Token 自动刷新 + 收藏精华脱敏提取
-* **规划中（Planned，打通真实登录与提取闭环后上架）**：
-  * `xianyu`（闲鱼）、`dingdong`（叮咚买菜）、`meituan`（美团）、`keep`（Keep）、`fliggy`（飞猪）
+```bash
+./bin/water list          # 查看支持平台与本机登录状态
+./bin/water login jike    # 单独触发扫码登录（凭证仅存 ~/.water/）
+./bin/water fetch jike    # 闭环拉取脱敏精华（未登录自动引导扫码）
+```
 
 ---
 
@@ -42,12 +33,12 @@ cd /path/to/your/Tree
 
 ```text
 water/
-├── bin/water                  # 统一闭环 CLI（list / login / install）
-├── connectors/
-│   ├── _template.py           # 标准连接器开发模板
-│   └── jike.py                # 即刻自包含连接器（已闭环）
+├── SKILL.md                   # 整合 Skill 契约（触发条件、闭环流程、隐私红线）
+├── bin/water                  # 统一执行引擎（list / login / fetch / install-skill）
+├── scripts/
+│   └── jike.py                # 即刻自包含闭环脚本（已就绪）
 ├── guides/
-│   └── lifestyle-sync.md      # 供 Tree `04-我如何工作/` 引用的联动规矩模板
-├── registry.json              # 插件清单与隐私边界声明
+│   └── lifestyle-sync.md      # Tree `04-我如何工作/` 联动规矩模板
+├── registry.json              # 平台能力与隐私边界清单
 └── README.md
 ```
