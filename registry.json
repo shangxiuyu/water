@@ -170,6 +170,26 @@
         "02-我的思考/",
         "03-我正在做的事/"
       ]
+    },
+    {
+      "id": "chrome",
+      "name": "Google Chrome",
+      "status": "ready",
+      "file": "scripts/chrome.py",
+      "category": "browser",
+      "reads": [
+        "书签目录精选",
+        "近期高频回访站点与页面标题（visit_count >= 3）"
+      ],
+      "never_reads": [
+        "Cookies 与登录凭证",
+        "密码与自动填充数据",
+        "localhost 与一次性搜索跳转流水"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "02-我的思考/"
+      ]
     }
   ]
 }

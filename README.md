@@ -43,8 +43,9 @@ water/
 │   ├── meituan.py             # 美团
 │   ├── keep.py                # Keep
 │   ├── taobao.py              # 淘宝 / 闪购 / 盒马
-│   └── jd.py                  # 京东
-│   └── wechat.py              # 微信（默认仅读收藏）
+│   ├── jd.py                  # 京东
+│   ├── wechat.py              # 微信（默认仅读收藏）
+│   └── chrome.py              # Google Chrome（书签与高频访问站点，不碰 Cookie）
 ├── guides/
 │   └── lifestyle-sync.md      # Tree `04-我如何工作/` 联动规矩模板
 ├── registry.json              # 平台能力与隐私边界清单
