@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "water",
+  "description": "Community read-only context connectors for Tree (Personal Context OS)",
+  "connectors": [
+    {
+      "id": "jike",
+      "name": "即刻 (Jike)",
+      "file": "connectors/jike.py",
+      "category": "community",
+      "reads": ["个人收藏精选", "个人原创动态摘要"],
+      "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
+      "requires": ["本机已配置 jike-ai Skill/CLI 或等效只读工具"],
+      "target_branches": ["01-关于我/", "02-我的思考/"]
+    },
+    {
+      "id": "xianyu",
+      "name": "闲鱼 (Xianyu)",
+      "file": "connectors/xianyu.py",
+      "category": "lifestyle",
+      "reads": ["持有/出让的核心硬件设备线索", "交易偏好摘要"],
+      "never_reads": ["首页推荐流", "实时议价聊天", "具体订单金额"],
+      "requires": ["本机已配置 xianyu-ai Skill/MCP"],
+      "target_branches": ["01-关于我/", "04-我如何工作/"]
+    },
+    {
+      "id": "dingdong",
+      "name": "叮咚买菜 (Dingdong)",
+      "file": "connectors/dingdong.py",
+      "category": "lifestyle",
+      "reads": ["常购品类偏好", "饮食习惯与忌口线索"],
+      "never_reads": ["具体消费金额", "门牌号等敏感精确地址", "单笔账单流水"],
+      "requires": ["本机已配置 dingdong-ai Skill/MCP"],
+      "target_branches": ["01-关于我/"]
+    }
+  ]
+}
