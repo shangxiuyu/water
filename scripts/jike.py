@@ -156,7 +156,7 @@ def login_qr(timeout: int = 180) -> bool:
         if sys.platform == "darwin":
             subprocess.run(["open", str(tmp)], stderr=subprocess.DEVNULL, check=False)
     except Exception:
-        pass
+        print("（提示：未检测到 `qrcode` 库，可安装 `pip install qrcode[pil]` 以自动弹出二维码图片）")
 
     print(f"扫码链接: {scan_url}")
     if qr_img_path:
@@ -220,7 +220,7 @@ def extract(
     short_hash = helpers.get("short_hash", lambda s: s[:12])
     now_iso = helpers.get("now_iso", lambda: time.strftime("%Y-%m-%dT%H:%M:%S"))
 
-    target = max(5, min(max_sessions, 40))
+    target = max(1, min(max_sessions, 100))
     items: list[dict[str, Any]] = []
     load_more_key: Any = None
     refreshed = False
