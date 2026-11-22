@@ -100,8 +100,8 @@ def _clean_url(url: str) -> tuple[str, str] | None:
     host = parsed.hostname or ""
     if not host or host in SKIP_HOSTS or any(k in host for k in SKIP_HOST_KEYWORDS):
         return None
-    # 过滤搜索引擎结果页
-    if (host.endswith("google.com") or host == "www.baidu.com" or host == "cn.bing.com") and parsed.path in {"/search", "/s"}:
+    # 过滤搜索引擎结果页与广告跳转页
+    if (host.endswith("google.com") or host == "www.baidu.com" or host == "cn.bing.com") and parsed.path in {"/search", "/s", "/aclk"}:
         return None
     clean = urllib.parse.urlunparse((parsed.scheme, parsed.netloc, parsed.path or "/", "", "", ""))
     return host, clean
@@ -153,21 +153,24 @@ def _collect_history(hist_path: Path, days: int, max_items: int) -> tuple[list[t
     pages: list[str] = []
     seen_urls: set[str] = set()
 
+    min_visits = 1 if days <= 7 else 3
+    order_by = "last_visit_time DESC" if days <= 7 else "visit_count DESC, last_visit_time DESC"
     try:
         shutil.copy2(hist_path, tmp_db)
         conn = sqlite3.connect(f"file:{tmp_db}?mode=ro", uri=True)
         cur = conn.cursor()
         cur.execute(
-            """
-            SELECT url, title, visit_count
+            f"""
+            SELECT url, title, visit_count,
+                   date(last_visit_time/1000000 - 11644473600, 'unixepoch', 'localtime') AS d
             FROM urls
-            WHERE last_visit_time >= ? AND visit_count >= 3 AND title != ''
-            ORDER BY visit_count DESC, last_visit_time DESC
+            WHERE last_visit_time >= ? AND visit_count >= ? AND title != ''
+            ORDER BY {order_by}
             LIMIT 250
             """,
-            (cutoff_us,),
+            (cutoff_us, min_visits),
         )
-        for url, title, vcount in cur.fetchall():
+        for url, title, vcount, d_str in cur.fetchall():
             cleaned = _clean_url(str(url or ""))
             if not cleaned:
                 continue
@@ -175,8 +178,8 @@ def _collect_history(hist_path: Path, days: int, max_items: int) -> tuple[list[t
             host_counts[host] += int(vcount or 1)
             if clean_u not in seen_urls and len(pages) < max_items:
                 seen_urls.add(clean_u)
-                t = str(title or "").strip().replace("\n", " ")[:80]
-                pages.append(f"- ({vcount}次) {t} — {clean_u}")
+                t = str(title or "").strip().replace("\n", " ")[:90]
+                pages.append(f"- [{d_str or ''}] ({vcount}次) {t} — {clean_u}")
         conn.close()
     except Exception:
         pass
@@ -232,7 +235,7 @@ def extract(days: int, max_sessions: int, helpers: dict[str, Any]) -> tuple[str,
     for p in profiles[:2]:
         label = f"{p['name']} ({p['email']})" if p["email"] else p["name"]
         top_hosts, top_pages = _collect_history(p["dir"] / "History", days=days, max_items=limit)
-        bookmarks = _collect_bookmarks(p["dir"] / "Bookmarks", max_items=limit)
+        bookmarks = _collect_bookmarks(p["dir"] / "Bookmarks", max_items=limit) if days > 7 else []
         if not top_hosts and not top_pages and not bookmarks:
             continue
 
