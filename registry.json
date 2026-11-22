@@ -9,9 +9,18 @@
       "status": "ready",
       "file": "scripts/jike.py",
       "category": "community",
-      "reads": ["个人收藏精选（正文、圈子、作者、链接）"],
-      "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
-      "target_branches": ["01-关于我/", "02-我的思考/"]
+      "reads": [
+        "个人收藏精选（正文、圈子、作者、链接）"
+      ],
+      "never_reads": [
+        "Cookie/Token 明文",
+        "私信",
+        "时间线刷屏流水"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "02-我的思考/"
+      ]
     },
     {
       "id": "dingdong",
@@ -19,9 +28,18 @@
       "status": "ready",
       "file": "scripts/dingdong.py",
       "category": "lifestyle",
-      "reads": ["常购食材品类偏好", "饮食习惯与忌口线索"],
-      "never_reads": ["单笔消费金额", "门牌号等精确地址", "流水账"],
-      "target_branches": ["01-关于我/"]
+      "reads": [
+        "常购食材品类偏好",
+        "饮食习惯与忌口线索"
+      ],
+      "never_reads": [
+        "单笔消费金额",
+        "门牌号等精确地址",
+        "流水账"
+      ],
+      "target_branches": [
+        "01-关于我/"
+      ]
     },
     {
       "id": "xianyu",
@@ -98,9 +116,18 @@
       "status": "ready",
       "file": "scripts/taobao.py",
       "category": "lifestyle",
-      "reads": ["常用城市商圈区域", "常用设备耗材与选品偏好"],
-      "never_reads": ["具体消费金额", "精确门牌号", "单笔账单流水"],
-      "target_branches": ["01-关于我/"]
+      "reads": [
+        "常用城市商圈区域",
+        "常用设备耗材与选品偏好"
+      ],
+      "never_reads": [
+        "具体消费金额",
+        "精确门牌号",
+        "单笔账单流水"
+      ],
+      "target_branches": [
+        "01-关于我/"
+      ]
     },
     {
       "id": "jd",
@@ -108,9 +135,38 @@
       "status": "ready",
       "file": "scripts/jd.py",
       "category": "lifestyle",
-      "reads": ["家用硬件设备与耗材型号", "自营选品偏好"],
-      "never_reads": ["具体消费金额", "精确门牌号", "物流明细流水"],
-      "target_branches": ["01-关于我/"]
+      "reads": [
+        "家用硬件设备与耗材型号",
+        "自营选品偏好"
+      ],
+      "never_reads": [
+        "具体消费金额",
+        "精确门牌号",
+        "物流明细流水"
+      ],
+      "target_branches": [
+        "01-关于我/"
+      ]
+    },
+    {
+      "id": "wechat",
+      "name": "微信 (WeChat)",
+      "status": "ready",
+      "file": "scripts/wechat.py",
+      "category": "messaging",
+      "reads": [
+        "微信收藏精选（主动筛选的文章、备忘与灵感）"
+      ],
+      "never_reads": [
+        "未授权的私聊与群聊流水",
+        "他人隐私信息",
+        "红包转账明细"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "02-我的思考/",
+        "03-我正在做的事/"
+      ]
     }
   ]
 }
