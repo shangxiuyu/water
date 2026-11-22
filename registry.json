@@ -1,14 +1,12 @@
 {
   "schema_version": 1,
   "name": "water",
-  "kind": "skill",
-  "description": "Integrated Skill for Tree (Personal Context OS) to fetch & distill 1% slow-changing personal context from external apps",
+  "description": "Community read-only context connectors for Tree (Personal Context OS)",
   "connectors": [
     {
       "id": "jike",
       "name": "即刻 (Jike)",
-      "status": "ready",
-      "file": "scripts/jike.py",
+      "file": "connectors/jike.py",
       "category": "community",
       "reads": ["个人收藏精选（正文、圈子、作者、链接）"],
       "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
@@ -30,9 +28,22 @@
       "status": "ready",
       "file": "scripts/xianyu.py",
       "category": "lifestyle",
-      "reads": ["持有/出让的核心硬件设备线索", "交易避坑偏好"],
-      "never_reads": ["首页推荐流", "实时议价聊天", "具体订单金额"],
-      "target_branches": ["01-关于我/", "04-我如何工作/"]
+      "reads": [
+        "持有/出让的核心硬件设备线索",
+        "交易偏好摘要"
+      ],
+      "never_reads": [
+        "首页推荐流",
+        "实时议价聊天",
+        "具体订单金额"
+      ],
+      "requires": [
+        "本机已配置 xianyu-ai Skill/MCP"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "04-我如何工作/"
+      ]
     },
     {
       "id": "meituan",
@@ -40,9 +51,21 @@
       "status": "ready",
       "file": "scripts/meituan.py",
       "category": "lifestyle",
-      "reads": ["饮食忌口与口味", "常驻商圈与到店娱乐偏好"],
-      "never_reads": ["每日外卖账单", "单车骑行轨迹", "精确门牌地址"],
-      "target_branches": ["01-关于我/"]
+      "reads": [
+        "饮食忌口与口味",
+        "常驻商圈与到店娱乐偏好"
+      ],
+      "never_reads": [
+        "每日外卖账单",
+        "单车骑行轨迹",
+        "精确门牌地址"
+      ],
+      "requires": [
+        "本机已配置 meituan-ai Skill/MCP"
+      ],
+      "target_branches": [
+        "01-关于我/"
+      ]
     },
     {
       "id": "keep",
@@ -50,9 +73,23 @@
       "status": "ready",
       "file": "scripts/keep.py",
       "category": "fitness",
-      "reads": ["长期运动项目偏好", "阶段训练目标（需用户显式授权）"],
-      "never_reads": ["心率/体脂等生理健康明细", "GPS 运动轨迹流水", "每日打卡记录"],
-      "target_branches": ["01-关于我/", "03-我正在做的事/"]
+      "reads": [
+        "长期运动项目偏好",
+        "阶段训练目标（需用户显式授权）"
+      ],
+      "never_reads": [
+        "心率/体脂等生理健康明细",
+        "GPS 运动轨迹流水",
+        "每日打卡记录"
+      ],
+      "requires": [
+        "本机已配置 keep-ai Skill/MCP",
+        "用户显式授权提取运动目标"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "03-我正在做的事/"
+      ]
     },
     {
       "id": "taobao",
@@ -72,15 +109,6 @@
       "category": "lifestyle",
       "reads": ["家用硬件设备与耗材型号", "自营选品偏好"],
       "never_reads": ["具体消费金额", "精确门牌号", "物流明细流水"],
-      "target_branches": ["01-关于我/"]
-    },
-    {
-      "id": "fliggy",
-      "name": "飞猪 (Fliggy)",
-      "status": "planned",
-      "category": "travel",
-      "reads": ["航司/座位/直飞偏好", "酒店房型要求", "高频出差城市"],
-      "never_reads": ["身份证/护照等证件号", "具体行程单", "机票酒店订单金额"],
       "target_branches": ["01-关于我/"]
     }
   ]

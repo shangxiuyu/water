@@ -1,6 +1,6 @@
 ---
 name: water
-description: Tree（Personal Context OS）的外部上下文灌溉技能。当用户希望把即刻、闲鱼、叮咚买菜、美团、Keep、飞猪等外部 App 的个人偏好、关注领域、设备资产与思考精华接入 Tree 时激活。自带扫码登录、只读拉取、流水过滤与脱敏闭环。
+description: Tree（Personal Context OS）的外部上下文灌溉技能。当用户希望把即刻、叮咚买菜、闲鱼、美团、Keep、淘宝/盒马、京东等外部 App 的个人偏好、关注领域、设备资产与思考精华接入 Tree 时激活。自带扫码登录、只读拉取、流水过滤与脱敏闭环。
 ---
 
 # Water Skill —— 为 Tree 灌溉外部上下文
@@ -53,4 +53,3 @@ description: Tree（Personal Context OS）的外部上下文灌溉技能。当�
 | `keep` | `ready` | 长期运动项目、阶段训练目标（**需用户显式授权**） | `01-关于我/`、`03-我正在做的事/` | `false` |
 | `taobao` | `ready` | 淘宝/闪购/盒马常用设备耗材、饮食与城市商圈偏好 | `01-关于我/生活与消费偏好.md` | `false` |
 | `jd` | `ready` | 家用硬件设备、耗材型号与自营选品偏好 | `01-关于我/生活与消费偏好.md` | `false` |
-| `fliggy` | `planned` | 航司/座位/直飞偏好、酒店房型要求、高频出差城市 | `01-关于我/生活与消费偏好.md` | `false` |

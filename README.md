@@ -1,7 +1,7 @@
 # Water Skill —— Tree 的外部上下文灌溉技能
 
 > **Seed（种子）破土，Water（活水）长流。**
-> **Water** 是一个整合型的 **Agent Skill**，专门配合 [Tree](https://github.com/shangxiuyu/Tree)（Personal Context OS）使用。它把外部 App（即刻、闲鱼、叮咚买菜、美团、Keep、飞猪等）的**扫码登录、只读拉取、流水过滤与脱敏提炼**打包成一个统一技能，让用户对 AI 说一句话就能完成外部上下文灌溉。
+> **Water** 是一个整合型的 **Agent Skill**，专门配合 [Tree](https://github.com/shangxiuyu/Tree)（Personal Context OS）使用。它把外部 App（即刻、叮咚买菜、闲鱼、美团、Keep、淘宝/盒马、京东）的**扫码登录、只读拉取、流水过滤与脱敏提炼**打包成一个统一技能，让用户对 AI 说一句话就能完成外部上下文灌溉。
 
 ---
 
