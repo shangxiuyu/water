@@ -6,7 +6,8 @@
     {
       "id": "jike",
       "name": "即刻 (Jike)",
-      "file": "connectors/jike.py",
+      "status": "ready",
+      "file": "scripts/jike.py",
       "category": "community",
       "reads": ["个人收藏精选（正文、圈子、作者、链接）"],
       "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
