@@ -162,6 +162,9 @@
         "他人隐私信息",
         "红包转账明细"
       ],
+      "requires": [
+        "本机已安装 wechat-cli 并完成本地微信数据库初始化（wechat-cli init）"
+      ],
       "target_branches": [
         "01-关于我/",
         "02-我的思考/",
