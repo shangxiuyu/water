@@ -32,6 +32,36 @@
       "never_reads": ["具体消费金额", "门牌号等敏感精确地址", "单笔账单流水"],
       "requires": ["本机已配置 dingdong-ai Skill/MCP"],
       "target_branches": ["01-关于我/"]
+    },
+    {
+      "id": "meituan",
+      "name": "美团 (Meituan)",
+      "file": "connectors/meituan.py",
+      "category": "lifestyle",
+      "reads": ["饮食忌口与口味", "常驻商圈与到店娱乐偏好"],
+      "never_reads": ["每日外卖账单", "单车骑行轨迹", "精确门牌地址"],
+      "requires": ["本机已配置 meituan-ai Skill/MCP"],
+      "target_branches": ["01-关于我/"]
+    },
+    {
+      "id": "keep",
+      "name": "Keep",
+      "file": "connectors/keep.py",
+      "category": "fitness",
+      "reads": ["长期运动项目偏好", "阶段训练目标（需用户显式授权）"],
+      "never_reads": ["心率/体脂等生理健康明细", "GPS 运动轨迹流水", "每日打卡记录"],
+      "requires": ["本机已配置 keep-ai Skill/MCP", "用户显式授权提取运动目标"],
+      "target_branches": ["01-关于我/", "03-我正在做的事/"]
+    },
+    {
+      "id": "fliggy",
+      "name": "飞猪 (Fliggy)",
+      "file": "connectors/fliggy.py",
+      "category": "travel",
+      "reads": ["航司/座位/直飞偏好", "酒店房型要求", "高频出差城市"],
+      "never_reads": ["身份证/护照等证件号", "具体行程单", "机票酒店订单金额"],
+      "requires": ["本机已配置 fliggy-ai Skill/MCP 或差旅偏好导出"],
+      "target_branches": ["01-关于我/"]
     }
   ]
 }

@@ -23,7 +23,10 @@ water/
 │   ├── _template.py           # 开发者扩展模板
 │   ├── jike.py                # 即刻（收藏与原创观点蒸馏）
 │   ├── xianyu.py              # 闲鱼（持有设备资产与交易避坑偏好）
-│   └── dingdong.py            # 叮咚买菜（饮食偏好与基础食材习惯）
+│   ├── dingdong.py            # 叮咚买菜（饮食偏好与基础食材习惯）
+│   ├── meituan.py             # 美团（饮食忌口、常驻商圈与到店偏好）
+│   ├── keep.py                # Keep（运动习惯与阶段目标，需用户显式授权）
+│   └── fliggy.py              # 飞猪（航旅座位、酒店房型与高频出差城市偏好）
 └── guides/
     └── lifestyle-sync.md      # 供 Tree `04-我如何工作/` 引用的联动规矩模板
 ```
