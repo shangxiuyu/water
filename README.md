@@ -36,7 +36,14 @@ water/
 ├── SKILL.md                   # 整合 Skill 契约（触发条件、闭环流程、隐私红线）
 ├── bin/water                  # 统一执行引擎（list / login / fetch / install-skill）
 ├── scripts/
-│   └── jike.py                # 即刻自包含闭环脚本（已就绪）
+│   ├── _bridge.py             # 共享本地套件定位与隐私脱敏辅助
+│   ├── jike.py                # 即刻
+│   ├── dingdong.py            # 叮咚买菜
+│   ├── xianyu.py              # 闲鱼
+│   ├── meituan.py             # 美团
+│   ├── keep.py                # Keep
+│   ├── taobao.py              # 淘宝 / 闪购 / 盒马
+│   └── jd.py                  # 京东
 ├── guides/
 │   └── lifestyle-sync.md      # Tree `04-我如何工作/` 联动规矩模板
 ├── registry.json              # 平台能力与隐私边界清单

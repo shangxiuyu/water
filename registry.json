@@ -10,33 +10,35 @@
       "status": "ready",
       "file": "scripts/jike.py",
       "category": "community",
-      "auth": "内置二维码扫码登录，凭证存本机 ~/.water/jike.json",
       "reads": ["个人收藏精选（正文、圈子、作者、链接）"],
       "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
       "target_branches": ["01-关于我/", "02-我的思考/"]
     },
     {
+      "id": "dingdong",
+      "name": "叮咚买菜 (Dingdong)",
+      "status": "ready",
+      "file": "scripts/dingdong.py",
+      "category": "lifestyle",
+      "reads": ["常购食材品类偏好", "饮食习惯与忌口线索"],
+      "never_reads": ["单笔消费金额", "门牌号等精确地址", "流水账"],
+      "target_branches": ["01-关于我/"]
+    },
+    {
       "id": "xianyu",
       "name": "闲鱼 (Xianyu)",
-      "status": "planned",
+      "status": "ready",
+      "file": "scripts/xianyu.py",
       "category": "lifestyle",
       "reads": ["持有/出让的核心硬件设备线索", "交易避坑偏好"],
       "never_reads": ["首页推荐流", "实时议价聊天", "具体订单金额"],
       "target_branches": ["01-关于我/", "04-我如何工作/"]
     },
     {
-      "id": "dingdong",
-      "name": "叮咚买菜 (Dingdong)",
-      "status": "planned",
-      "category": "lifestyle",
-      "reads": ["常购品类偏好", "饮食习惯与忌口线索"],
-      "never_reads": ["具体消费金额", "门牌号等敏感精确地址", "单笔账单流水"],
-      "target_branches": ["01-关于我/"]
-    },
-    {
       "id": "meituan",
       "name": "美团 (Meituan)",
-      "status": "planned",
+      "status": "ready",
+      "file": "scripts/meituan.py",
       "category": "lifestyle",
       "reads": ["饮食忌口与口味", "常驻商圈与到店娱乐偏好"],
       "never_reads": ["每日外卖账单", "单车骑行轨迹", "精确门牌地址"],
@@ -45,11 +47,32 @@
     {
       "id": "keep",
       "name": "Keep",
-      "status": "planned",
+      "status": "ready",
+      "file": "scripts/keep.py",
       "category": "fitness",
       "reads": ["长期运动项目偏好", "阶段训练目标（需用户显式授权）"],
       "never_reads": ["心率/体脂等生理健康明细", "GPS 运动轨迹流水", "每日打卡记录"],
       "target_branches": ["01-关于我/", "03-我正在做的事/"]
+    },
+    {
+      "id": "taobao",
+      "name": "淘宝 / 闪购 / 盒马 (Taobao & Hema)",
+      "status": "ready",
+      "file": "scripts/taobao.py",
+      "category": "lifestyle",
+      "reads": ["常用城市商圈区域", "常用设备耗材与选品偏好"],
+      "never_reads": ["具体消费金额", "精确门牌号", "单笔账单流水"],
+      "target_branches": ["01-关于我/"]
+    },
+    {
+      "id": "jd",
+      "name": "京东 (JD)",
+      "status": "ready",
+      "file": "scripts/jd.py",
+      "category": "lifestyle",
+      "reads": ["家用硬件设备与耗材型号", "自营选品偏好"],
+      "never_reads": ["具体消费金额", "精确门牌号", "物流明细流水"],
+      "target_branches": ["01-关于我/"]
     },
     {
       "id": "fliggy",

@@ -27,6 +27,9 @@ def load_registry() -> dict:
 
 
 def load_script(cid: str):
+    scripts_dir = str(ROOT / "scripts")
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
     path = ROOT / "scripts" / f"{cid}.py"
     if not path.is_file():
         return None
