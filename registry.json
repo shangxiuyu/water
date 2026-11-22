@@ -1,66 +1,62 @@
 {
   "schema_version": 1,
   "name": "water",
-  "description": "Community read-only context connectors for Tree (Personal Context OS)",
+  "description": "Self-contained read-only context connectors for Tree (Personal Context OS)",
   "connectors": [
     {
       "id": "jike",
       "name": "即刻 (Jike)",
+      "status": "ready",
       "file": "connectors/jike.py",
       "category": "community",
-      "reads": ["个人收藏精选", "个人原创动态摘要"],
+      "auth": "内置二维码扫码登录，凭证存本机 ~/.water/jike.json",
+      "reads": ["个人收藏精选（正文、圈子、作者、链接）"],
       "never_reads": ["Cookie/Token 明文", "私信", "时间线刷屏流水"],
-      "requires": ["本机已配置 jike-ai Skill/CLI 或等效只读工具"],
       "target_branches": ["01-关于我/", "02-我的思考/"]
     },
     {
       "id": "xianyu",
       "name": "闲鱼 (Xianyu)",
-      "file": "connectors/xianyu.py",
+      "status": "planned",
       "category": "lifestyle",
-      "reads": ["持有/出让的核心硬件设备线索", "交易偏好摘要"],
+      "reads": ["持有/出让的核心硬件设备线索", "交易避坑偏好"],
       "never_reads": ["首页推荐流", "实时议价聊天", "具体订单金额"],
-      "requires": ["本机已配置 xianyu-ai Skill/MCP"],
       "target_branches": ["01-关于我/", "04-我如何工作/"]
     },
     {
       "id": "dingdong",
       "name": "叮咚买菜 (Dingdong)",
-      "file": "connectors/dingdong.py",
+      "status": "planned",
       "category": "lifestyle",
       "reads": ["常购品类偏好", "饮食习惯与忌口线索"],
       "never_reads": ["具体消费金额", "门牌号等敏感精确地址", "单笔账单流水"],
-      "requires": ["本机已配置 dingdong-ai Skill/MCP"],
       "target_branches": ["01-关于我/"]
     },
     {
       "id": "meituan",
       "name": "美团 (Meituan)",
-      "file": "connectors/meituan.py",
+      "status": "planned",
       "category": "lifestyle",
       "reads": ["饮食忌口与口味", "常驻商圈与到店娱乐偏好"],
       "never_reads": ["每日外卖账单", "单车骑行轨迹", "精确门牌地址"],
-      "requires": ["本机已配置 meituan-ai Skill/MCP"],
       "target_branches": ["01-关于我/"]
     },
     {
       "id": "keep",
       "name": "Keep",
-      "file": "connectors/keep.py",
+      "status": "planned",
       "category": "fitness",
       "reads": ["长期运动项目偏好", "阶段训练目标（需用户显式授权）"],
       "never_reads": ["心率/体脂等生理健康明细", "GPS 运动轨迹流水", "每日打卡记录"],
-      "requires": ["本机已配置 keep-ai Skill/MCP", "用户显式授权提取运动目标"],
       "target_branches": ["01-关于我/", "03-我正在做的事/"]
     },
     {
       "id": "fliggy",
       "name": "飞猪 (Fliggy)",
-      "file": "connectors/fliggy.py",
+      "status": "planned",
       "category": "travel",
       "reads": ["航司/座位/直飞偏好", "酒店房型要求", "高频出差城市"],
       "never_reads": ["身份证/护照等证件号", "具体行程单", "机票酒店订单金额"],
-      "requires": ["本机已配置 fliggy-ai Skill/MCP 或差旅偏好导出"],
       "target_branches": ["01-关于我/"]
     }
   ]

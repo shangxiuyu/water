@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Water CLI —— 一键完成 Tree 外部连接器的登录、安装与闭环校验。"""
+
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import json
+import shutil
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+REGISTRY_PATH = ROOT / "registry.json"
+
+
+def load_registry() -> dict:
+    return json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+
+
+def load_connector(cid: str):
+    path = ROOT / "connectors" / f"{cid}.py"
+    if not path.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location(f"water_conn_{cid}", str(path))
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def cmd_list(_args) -> int:
+    reg = load_registry()
+    print("Water 连接器清单：\n")
+    for item in reg.get("connectors", []):
+        status = item.get("status", "planned")
+        badge = "✅ ready" if status == "ready" else "🚧 planned"
+        print(f"  {item['id']:<10} [{badge}]  {item['name']}")
+        print(f"             读取: {', '.join(item.get('reads', []))}")
+        print(f"             禁碰: {', '.join(item.get('never_reads', []))}")
+        if status == "ready":
+            mod = load_connector(item["id"])
+            if mod and callable(getattr(mod, "discover", None)):
+                info = mod.discover()
+                print(f"             本机: {info.get('detail', '')}")
+        print()
+    return 0
+
+
+def cmd_login(args) -> int:
+    mod = load_connector(args.connector)
+    if not mod:
+        print(f"❌ 未找到已实现的连接器 `{args.connector}`（运行 `water list` 查看可用连接器）。", file=sys.stderr)
+        return 1
+    login_fn = getattr(mod, "login_qr", None)
+    if not callable(login_fn):
+        print(f"❌ 连接器 `{args.connector}` 暂不支持扫码登录。", file=sys.stderr)
+        return 1
+    return 0 if login_fn(timeout=args.timeout) else 1
+
+
+def cmd_install(args) -> int:
+    cid = args.connector
+    src = ROOT / "connectors" / f"{cid}.py"
+    if not src.is_file():
+        print(f"❌ 连接器 `{cid}` 尚未就绪（运行 `water list` 查看可用连接器）。", file=sys.stderr)
+        return 1
+
+    tree_root = Path(args.tree).expanduser().resolve()
+    if not (tree_root / "bin/tree").exists() and not (tree_root / ".tree").exists():
+        print(f"❌ `{tree_root}` 不像是一个 Tree 仓库（未找到 `bin/tree` 或 `.tree/`）。", file=sys.stderr)
+        return 1
+
+    mod = load_connector(cid)
+    if mod and callable(getattr(mod, "discover", None)):
+        info = mod.discover()
+        if not info.get("available"):
+            print(f"⚠️ `{cid}` 尚未登录：{info.get('detail', '')}")
+            login_fn = getattr(mod, "login_qr", None)
+            if callable(login_fn) and not args.no_login:
+                if not login_fn(timeout=args.timeout):
+                    return 1
+
+    dest_dir = tree_root / ".tree/seed/connectors"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest = dest_dir / f"{cid}.py"
+    shutil.copy2(src, dest)
+    print(f"✅ 已安装 `{cid}` 到 {dest}")
+    print(f"下一步运行：\n  cd {tree_root} && ./bin/tree seed extract --sources {cid}")
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(prog="water", description="Water —— Tree 外部上下文闭环连接器")
+    sub = parser.add_subparsers(dest="cmd", required=True)
+
+    p_list = sub.add_parser("list", help="查看可用与规划中的连接器及本机登录状态")
+    p_list.set_defaults(func=cmd_list)
+
+    p_login = sub.add_parser("login", help="一键扫码登录指定平台（凭证仅存本机 ~/.water/）")
+    p_login.add_argument("connector", help="连接器 ID，如 jike")
+    p_login.add_argument("--timeout", type=int, default=180, help="扫码等待超时秒数")
+    p_login.set_defaults(func=cmd_login)
+
+    p_inst = sub.add_parser("install", help="安装连接器到 Tree（未登录时自动引导扫码）")
+    p_inst.add_argument("connector", help="连接器 ID，如 jike")
+    p_inst.add_argument("--tree", default=str(Path.cwd()), help="目标 Tree 仓库路径（默认当前目录）")
+    p_inst.add_argument("--timeout", type=int, default=180, help="扫码等待超时秒数")
+    p_inst.add_argument("--no-login", action="store_true", help="仅复制文件，不自动引导扫码")
+    p_inst.set_defaults(func=cmd_install)
+
+    args = parser.parse_args()
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
