@@ -1,129 +1,80 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "name": "water",
-  "description": "Community read-only context connectors for Tree (Personal Context OS)",
+  "description": "Official on-demand external App connectors for Tree (`tree seed add <id>`)",
   "connectors": [
     {
-      "id": "jike",
-      "name": "即刻 (Jike)",
+      "id": "meituan",
+      "name": "美团 (饮食口味与常驻商圈)",
       "status": "ready",
-      "file": "scripts/jike.py",
-      "category": "community",
-      "reads": [
-        "个人收藏精选（正文、圈子、作者、链接）"
-      ],
-      "never_reads": [
-        "Cookie/Token 明文",
-        "私信",
-        "时间线刷屏流水"
-      ],
-      "target_branches": [
-        "01-关于我/",
-        "02-我的思考/"
-      ]
-    },
-    {
-      "id": "dingdong",
-      "name": "叮咚买菜 (Dingdong)",
-      "status": "ready",
-      "file": "scripts/dingdong.py",
       "category": "lifestyle",
-      "reads": [
-        "常购食材品类偏好",
-        "饮食习惯与忌口线索"
-      ],
-      "never_reads": [
-        "单笔消费金额",
-        "门牌号等精确地址",
-        "流水账"
-      ],
-      "target_branches": [
-        "01-关于我/"
-      ]
-    },
-    {
-      "id": "xianyu",
-      "name": "闲鱼 (Xianyu)",
-      "status": "ready",
-      "file": "scripts/xianyu.py",
-      "category": "lifestyle",
-      "reads": [
-        "持有/出让的核心硬件设备线索",
-        "交易偏好摘要"
-      ],
-      "never_reads": [
-        "首页推荐流",
-        "实时议价聊天",
-        "具体订单金额"
+      "files": [
+        "connectors/meituan/connector.py",
+        "connectors/meituan/meituan_client.py"
       ],
       "requires": [
-        "本机已配置 xianyu-ai Skill/MCP"
+        "playwright"
       ],
-      "target_branches": [
-        "01-关于我/",
-        "04-我如何工作/"
-      ]
-    },
-    {
-      "id": "meituan",
-      "name": "美团 (Meituan)",
-      "status": "ready",
-      "file": "scripts/meituan.py",
-      "category": "lifestyle",
+      "install_cmd": "pip install playwright && playwright install chromium",
       "reads": [
-        "饮食忌口与口味",
-        "常驻商圈与到店娱乐偏好"
+        "外卖/闪购/团购常点店铺与品类偏好"
       ],
       "never_reads": [
-        "每日外卖账单",
+        "订单号与单笔消费金额",
         "单车骑行轨迹",
         "精确门牌地址"
       ],
-      "requires": [
-        "本机已配置 meituan-ai Skill/MCP"
-      ],
       "target_branches": [
         "01-关于我/"
-      ]
-    },
-    {
-      "id": "keep",
-      "name": "Keep",
-      "status": "ready",
-      "file": "scripts/keep.py",
-      "category": "fitness",
-      "reads": [
-        "长期运动项目偏好",
-        "阶段训练目标（需用户显式授权）"
-      ],
-      "never_reads": [
-        "心率/体脂等生理健康明细",
-        "GPS 运动轨迹流水",
-        "每日打卡记录"
-      ],
-      "requires": [
-        "本机已配置 keep-ai Skill/MCP",
-        "用户显式授权提取运动目标"
-      ],
-      "target_branches": [
-        "01-关于我/",
-        "03-我正在做的事/"
       ]
     },
     {
       "id": "taobao",
-      "name": "淘宝 / 闪购 / 盒马 (Taobao & Hema)",
+      "name": "淘宝 / 闪购 / 盒马 (消费与商圈偏好)",
       "status": "ready",
-      "file": "scripts/taobao.py",
       "category": "lifestyle",
+      "files": [
+        "connectors/taobao/connector.py",
+        "connectors/taobao/ali_client.py",
+        "connectors/taobao/hema_client.py",
+        "connectors/taobao/eleme_client.py"
+      ],
+      "requires": [
+        "playwright"
+      ],
+      "install_cmd": "pip install playwright && playwright install chromium",
       "reads": [
-        "常用城市商圈区域",
-        "常用设备耗材与选品偏好"
+        "常用城市与商圈 POI（剥离门牌号与姓名电话）",
+        "盒马/闪购/淘宝常购品类与设备耗材标题"
       ],
       "never_reads": [
-        "具体消费金额",
-        "精确门牌号",
-        "单笔账单流水"
+        "订单号与消费金额",
+        "精确门牌号与收货人手机号",
+        "购物车实时结算明细"
+      ],
+      "target_branches": [
+        "01-关于我/"
+      ]
+    },
+    {
+      "id": "dingdong",
+      "name": "叮咚买菜 (常购食材与饮食习惯)",
+      "status": "ready",
+      "category": "lifestyle",
+      "files": [
+        "connectors/dingdong/connector.py",
+        "connectors/dingdong/dingdong_client.py"
+      ],
+      "requires": [
+        "playwright"
+      ],
+      "install_cmd": "pip install playwright && playwright install chromium",
+      "reads": [
+        "高频复购食材清单与饮食习惯线索"
+      ],
+      "never_reads": [
+        "订单号与单笔实付金额",
+        "收货地址门牌号与配送员电话"
       ],
       "target_branches": [
         "01-关于我/"
@@ -131,39 +82,98 @@
     },
     {
       "id": "jd",
-      "name": "京东 (JD)",
+      "name": "京东 (硬件设备与耗材线索)",
       "status": "ready",
-      "file": "scripts/jd.py",
       "category": "lifestyle",
+      "files": [
+        "connectors/jd/connector.py",
+        "connectors/jd/jd_client.py"
+      ],
+      "requires": [
+        "requests",
+        "playwright"
+      ],
+      "install_cmd": "pip install requests playwright && playwright install chromium",
       "reads": [
-        "家用硬件设备与耗材型号",
-        "自营选品偏好"
+        "家用硬件设备型号与常购耗材标题"
       ],
       "never_reads": [
-        "具体消费金额",
-        "精确门牌号",
-        "物流明细流水"
+        "订单号与消费金额",
+        "收货人信息与物流轨迹"
       ],
       "target_branches": [
         "01-关于我/"
       ]
     },
     {
-      "id": "wechat",
-      "name": "微信 (WeChat)",
+      "id": "xianyu",
+      "name": "闲鱼 (硬件资产流转与闲置线索)",
       "status": "ready",
-      "file": "scripts/wechat.py",
-      "category": "messaging",
-      "reads": [
-        "微信收藏精选（主动筛选的文章、备忘与灵感）"
-      ],
-      "never_reads": [
-        "未授权的私聊与群聊流水",
-        "他人隐私信息",
-        "红包转账明细"
+      "category": "lifestyle",
+      "files": [
+        "connectors/xianyu/connector.py",
+        "connectors/xianyu/xianyu_client.py"
       ],
       "requires": [
-        "本机已安装 wechat-cli 并完成本地微信数据库初始化（wechat-cli init）"
+        "ego-browser（或手动在 .env 配置闲鱼 Cookie）"
+      ],
+      "install_cmd": "",
+      "reads": [
+        "已购入与已发布的硬件/闲置物品标题"
+      ],
+      "never_reads": [
+        "交易金额与议价私聊流水",
+        "首页猜你喜欢推荐流"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "04-我如何工作/"
+      ]
+    },
+    {
+      "id": "keep",
+      "name": "Keep (运动项目习惯与阶段目标)",
+      "status": "ready",
+      "category": "fitness",
+      "files": [
+        "connectors/keep/connector.py",
+        "connectors/keep/keep_client.py"
+      ],
+      "requires": [
+        "requests"
+      ],
+      "install_cmd": "pip install requests",
+      "reads": [
+        "长期运动项目偏好与累计运动概览（需用户明确授权）"
+      ],
+      "never_reads": [
+        "单次心率曲线与 GPS 运动轨迹",
+        "未授权的生理健康明细"
+      ],
+      "target_branches": [
+        "01-关于我/",
+        "03-我正在做的事/"
+      ]
+    },
+    {
+      "id": "wechat",
+      "name": "微信 (收藏精选)",
+      "status": "ready",
+      "category": "messaging",
+      "files": [
+        "connectors/wechat/connector.py"
+      ],
+      "requires": [
+        "本机已安装 wechat-cli 并完成本地数据库初始化（wechat-cli init）"
+      ],
+      "install_cmd": "",
+      "reads": [
+        "微信主动收藏的文章、备忘与高价值摘要"
+      ],
+      "never_reads": [
+        "私聊与群聊流水",
+        "红包转账明细",
+        "公众号个人追踪参数（pass_ticket/uin/key）"
       ],
       "target_branches": [
         "01-关于我/",
@@ -172,21 +182,95 @@
       ]
     },
     {
-      "id": "chrome",
-      "name": "Google Chrome",
+      "id": "getnote",
+      "name": "得到大脑 (知识库/笔记/划线)",
       "status": "ready",
-      "file": "scripts/chrome.py",
-      "category": "browser",
+      "category": "knowledge",
+      "files": [
+        "connectors/getnote/connector.py",
+        "connectors/getnote/getnote_client.py"
+      ],
+      "requires": [],
+      "install_cmd": "",
       "reads": [
-        "书签目录精选",
-        "近期高频回访站点与页面标题（visit_count >= 3）"
+        "自有与订阅知识库全景目录、近期发芽报告、个人笔记与得到课程/电子书划线（含实时 recall 与 detail 查询）"
       ],
       "never_reads": [
-        "Cookies 与登录凭证",
-        "密码与自动填充数据",
-        "localhost 与一次性搜索跳转流水"
+        "未授权的他人私密共享内容",
+        "未经用户确认直接将长篇原文全量搬入 01~04"
       ],
       "target_branches": [
+        "seed/",
+        "02-我的思考/",
+        "03-我正在做的事/"
+      ]
+    },
+    {
+      "id": "flomo",
+      "name": "flomo 浮墨笔记 (卡片/标签/记忆)",
+      "status": "ready",
+      "category": "knowledge",
+      "files": [
+        "connectors/flomo/connector.py",
+        "connectors/flomo/flomo_client.py"
+      ],
+      "requires": [],
+      "install_cmd": "",
+      "reads": [
+        "flomo 用户稳定画像 (memory_user)、近期记忆、标签树与近期卡片（含实时 search/tags 查询；需 Max/领航者会员）"
+      ],
+      "never_reads": [
+        "未经用户确认直接将全部碎片卡片搬入 01~04"
+      ],
+      "target_branches": [
+        "seed/",
+        "02-我的思考/",
+        "03-我正在做的事/"
+      ]
+    },
+    {
+      "id": "weread",
+      "name": "微信读书 (书架/想法/划线)",
+      "status": "ready",
+      "category": "knowledge",
+      "files": [
+        "connectors/weread/connector.py",
+        "connectors/weread/weread_client.py"
+      ],
+      "requires": [],
+      "install_cmd": "",
+      "reads": [
+        "阅读统计画像、有笔记书单、个人想法/书评与章节精选划线（含实时 bookmarks/reviews 查询）"
+      ],
+      "never_reads": [
+        "未经提炼将整本书全部原文划线搬入 01~04"
+      ],
+      "target_branches": [
+        "seed/",
+        "01-关于我/",
+        "02-我的思考/"
+      ]
+    },
+    {
+      "id": "jike",
+      "name": "即刻 Jike (精选收藏)",
+      "status": "ready",
+      "category": "social",
+      "files": [
+        "connectors/jike/connector.py",
+        "connectors/jike/jike_client.py"
+      ],
+      "requires": [],
+      "install_cmd": "",
+      "reads": [
+        "即刻个人主动收藏精华帖与外链（不含首页推荐流水）"
+      ],
+      "never_reads": [
+        "首页算法推荐流",
+        "随手点赞与私信"
+      ],
+      "target_branches": [
+        "seed/",
         "01-关于我/",
         "02-我的思考/"
       ]
